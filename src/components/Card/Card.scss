@@ -1,0 +1,79 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    width: 210px;
+    border-radius: 40px;
+    border: 1px solid #F3F3F3;
+    background: #FFF;
+    transition: .2s ease-in;
+    & .Card__img {
+        padding: 20px 44px 0px 33px;
+        cursor: pointer;
+        img {
+            width: 133px;
+            height: 112px;
+        }
+    }
+    & .Card__title {
+        padding: 14px 29px 0px 31px;
+        cursor: pointer;
+        h3 {
+            color: #000;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+    & .Card__price {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 29px 34px 30px;
+        & .Card__price-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            h4 {
+                color: #BDBDBD;
+                font-family: 'Inter', sans-serif;
+                font-size: 11px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                text-transform: uppercase;
+            }
+            p {
+                color: #000;
+                font-family: 'Inter', sans-serif;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+            }
+        }
+        .Card__price-svg {
+            & button {
+                border: none;
+                outline: none;
+                background-color: transparent;
+                cursor: pointer;
+            }
+            svg {
+                stroke: none;
+                fill: #D3D3D3;
+            }
+            & button svg:hover {
+                stroke: #000;
+                fill: #000;
+            }
+        }
+    }
+}
+.Card:hover {
+    transform: translateY(-10px);
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
