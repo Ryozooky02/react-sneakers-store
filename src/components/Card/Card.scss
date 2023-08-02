@@ -7,6 +7,7 @@
     background: #FFF;
     transition: .2s ease-in;
     & .Card__img {
+        position: relative;
         padding: 20px 44px 0px 33px;
         cursor: pointer;
         img {
@@ -34,7 +35,7 @@
         & .Card__price-info {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 6px;
             h4 {
                 color: #BDBDBD;
                 font-family: 'Inter', sans-serif;
@@ -61,12 +62,11 @@
                 cursor: pointer;
             }
             svg {
-                stroke: none;
-                fill: #D3D3D3;
+                transition: all .2s;
+                cursor: pointer;
             }
             & button svg:hover {
-                stroke: #000;
-                fill: #000;
+                transform: scale(1.1);
             }
         }
     }
@@ -76,4 +76,32 @@
     -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+
+.Card__favorite-nonActive {
+    svg {
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        stroke: #5C5C5C;
+        fill: #fff;
+        transition: all .2s;
+    }
+    svg:hover {
+        transform: scale(1.1);
+    } 
+}
+.Card__favorite-Active {
+    svg {
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        stroke: red;
+        fill: red;
+        transition: all .2s;
+    }
+    svg:hover {
+        transform: scale(1.1);
+    } 
 }
