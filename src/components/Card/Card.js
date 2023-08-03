@@ -2,7 +2,7 @@ import '../Card/Card.scss';
 import {useState, useEffect} from 'react';
 
 
-const Cards = (props) => {
+const Cards = ({image, name, price, onPlus}) => {
 
 
     const [isAdded, setIsAdded] = useState(false);
@@ -13,6 +13,7 @@ const Cards = (props) => {
     }
     
     const onClickPlus = () => {
+        onPlus({image, name, price});
         setIsAdded(!isAdded)
     }
 
@@ -26,18 +27,18 @@ const Cards = (props) => {
             <div className="Cards__list">
                 <div className="Card">
                             <div className="Card__img">
-                                <img src={props.image} alt="Card" />
+                                <img src={image} alt="Card" />
                                 <div className={ isLiked ? 'Card__favorite-Active' : 'Card__favorite-nonActive'}>
                                     <svg onClick={onClickLikeDislike} width={20}  height={20} clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 5.72c-2.624-4.517-10-3.198-10 2.461 0 3.725 4.345 7.727 9.303 12.54.194.189.446.283.697.283s.503-.094.697-.283c4.977-4.831 9.303-8.814 9.303-12.54 0-5.678-7.396-6.944-10-2.461z" fill-rule="nonzero"/></svg>
                                     </div>
                             </div>
                             <div className="Card__title">
-                                <h3>{props.name}</h3>
+                                <h3>{name}</h3>
                             </div>
                             <div className="Card__price">
                                 <div className="Card__price-info">
                                     <h4>Цена:</h4>
-                                    <p>{props.price} руб.</p>
+                                    <p>{price} руб.</p>
                                 </div>
             
                                 <div className="Card__price-svg">

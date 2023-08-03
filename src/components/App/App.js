@@ -9,8 +9,15 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [items, setItems] = useState([])
-  const [CartOpened, setCartOpened] = useState(false)
+  const [items, setItems] = useState([]);
+  const [CartOpened, setCartOpened] = useState(false);
+  const [CartItems, setCartItems] = useState([]);
+
+  const onAddtoCart = (obj) => {
+    setCartItems([...CartItems, obj])
+  }
+
+  console.log(CartItems);
 
   useEffect(() => {
     fetch('https://64ca5b0f700d50e3c704c5cc.mockapi.io/items')
@@ -21,7 +28,7 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        {CartOpened && <Drawer DataCard={items} onCloseDrawer={() => setCartOpened(false)}/>}
+        {CartOpened && <Drawer CartItems={CartItems} onCloseDrawer={() => setCartOpened(false)}/>}
         <Header onOpenCart={() => setCartOpened(true)}/>
 
         <div className="Cards__header">
@@ -35,7 +42,7 @@ function App() {
             </div>
         <div className="Cards_hero">
           {items.map((item, index) => (
-              <Card key={index} name={item.name} price={item.price} image={item.image} onCheck={() => console.log(item)}/>
+              <Card key={index} name={item.name} price={item.price} image={item.image} onPlus={(obj) => onAddtoCart(obj)}/>
             ))}
         </div>
       </div>
