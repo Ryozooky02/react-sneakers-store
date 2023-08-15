@@ -1,18 +1,17 @@
-# react-sneakers-store
-Mini-project.
-BRANCHES: MASTER
+# REACT-SNEAKERS-STORE
 
-Rus: 
-Мини проект магазина кросовок. 
-Стек: JS, REACT.JS(Чистый, Функциоанльный на хуках)
-Препроцессор: SCSS
+***Цель: Практика основ React 18-версии с использованием хуков, библиотек, ***
 
-Хотел стилизацию через MUI, но решение осталось на чистой верстке для практики. 
+## ПОЛНЫЙ СТЭК:
+1. React.js 18v.
+2. React Hooks (Хуки).
+3. JavaScript.
+4. Axios (Запросы на сервер, в нашем случаи для теста JSON-Server(localHost: 3001)).
+5. Content-Loader-React (Скелет предзагрузки).
+6. React Router 6v (Навигация).
+7. SCSS (Стили).
 
-Eng: 
-Mini project for a sneaker store.
-Stack: JS, REACT.JS(Clean, Functional on hooks)
-Preprocessor: SCSS
 
-I wanted styling through MUI, but the solution was left on a clean layout for practice.
+
+
 
