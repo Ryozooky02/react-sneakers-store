@@ -4,12 +4,14 @@
 
 ## ПОЛНЫЙ СТЭК:
 1. React.js 18v.
-2. React Hooks (Хуки).
+2. React Hooks (useState, useEffect, useContext).
 3. JavaScript.
-4. Axios (Запросы на сервер, в нашем случаи для теста JSON-Server(localHost: 3001)).
-5. Content-Loader-React (Скелет предзагрузки).
-6. React Router 6v (Навигация).
-7. SCSS (Стили).
+4. Axios (Запросы на сервер).
+5. JSON-Server
+6. Content-Loader-React (Скелет предзагрузки).
+7. React Router 6v (Навигация).
+8. SCSS (Стили).
+9. Deploy: GitHub Pages.
 
 
 
