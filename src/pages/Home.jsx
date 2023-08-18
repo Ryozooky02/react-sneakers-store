@@ -1,13 +1,43 @@
+
 import Card from '../components/Card/Card';
 import Search from '../resources/svg/search-card.svg';
 
 
-function Home({SearchValue, onSearchCard, setSearchValue, items, onAddtoCart, onAddtoFavorite}) {
+
+function Home(
+    {SearchValue, 
+    onSearchCard, 
+    setSearchValue, 
+    items, 
+    onAddtoCart, 
+    onAddtoFavorite, 
+    isLoading,
+    }) {
+
+    
+
+
+    const RenderItems = () => {
+        const FiltredItems = items
+        .filter(item => item.name.toLowerCase()
+        .includes(SearchValue.toLowerCase()))
+        return (isLoading ? [...Array(12)] : FiltredItems)
+                    .map((item, index) => (
+                    <Card key={index} 
+                        loading={isLoading}
+                        {...item}
+                        onAddtoCart={(obj) => onAddtoCart(obj)} 
+                        onAddtoFavorite={onAddtoFavorite}
+                      />
+                  ))
+
+    }
+
     return(
         <div className="content-cards">
           <div className="Cards__header">
                   <div className="Cards__title">
-                      <h1>{SearchValue ? `Поиск по запросу '${SearchValue}'` : 'Все кросовки'}</h1>
+                      <h1>{SearchValue ? `Поиск по запросу '${SearchValue}'` : 'Все кроссовки'}</h1>
                   </div>
                   <div className="Cards__input">
                       <img src={Search} alt="search" />
@@ -19,15 +49,7 @@ function Home({SearchValue, onSearchCard, setSearchValue, items, onAddtoCart, on
                   </div>
               </div>
               <div className="Cards_hero">
-                {items.filter(item => item.name.toLowerCase()
-                .includes(SearchValue.toLowerCase()))
-                .map((item, index) => (
-                    <Card key={index} 
-                      {...item}
-                      onPlus={(obj) => onAddtoCart(obj)} 
-                      onAddtoFavorite={onAddtoFavorite}
-                      />
-                  ))}
+              {RenderItems()}
               </div>
         </div>
     )

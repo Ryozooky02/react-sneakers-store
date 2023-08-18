@@ -1,6 +1,11 @@
+import { useContext } from 'react';
 import Card from '../components/Card/Card';
+import { AppContext } from '../components/App/App';
 
-function Favorites({FavoriteItems, onAddtoFavorite}) {
+function Favorites({ onAddtoFavorite, onAddtoCart}) {
+
+    const { FavoriteItems } = useContext(AppContext);
+    
 
     console.log(FavoriteItems);
     return (
@@ -15,6 +20,7 @@ function Favorites({FavoriteItems, onAddtoFavorite}) {
                     <Card key={index} 
                       favorited={true}
                       onAddtoFavorite={onAddtoFavorite}
+                      onAddtoCart={onAddtoCart}
                       {...item}
                       />
                   ))}

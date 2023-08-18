@@ -1,8 +1,13 @@
 import '../Header/Header.scss';
 import logo from '../../resources/logo/logo.png';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from '../App/App';
 
 const Header = (props) => {
+
+    const { CartItems } = useContext(AppContext);
+    const TotalPrice = CartItems.reduce((sum, obj) => obj.price + sum, 0);
 
     return ( 
         <div className="header">
@@ -23,7 +28,7 @@ const Header = (props) => {
                     </svg>
                 </div>
                 <div className="header__right-price">
-                    <span>1205 руб.</span>
+                    <span>{TotalPrice} руб.</span>
                 </div>
                     <div className="header__right-heart">
                         <Link to="/favorites">

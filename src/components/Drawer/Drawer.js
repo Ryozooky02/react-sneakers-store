@@ -1,10 +1,51 @@
 import '../Drawer/Drawer.scss';
 import ArrowSVG from '../../resources/svg/drawer-button-arrow.svg';
 import emptyBoxCart from '../../resources/cart/emptyBoxCart.png';
-import arrowBoxCart from '../../resources/cart/arrowEmptyCart.png';
-const Drawer = ({onCloseDrawer, CartItems = [], onRemoveFromCart}) => {
+import OrderCompleteBoxCart from '../../resources/cart/cart-ordered.jpg';
+import Info from '../Info/Info';
+import { useState } from 'react';
+import axios from 'axios';
+import { useCart } from '../../hooks/useCart';
 
 
+const Drawer = ({onCloseDrawer, itemsCart = [], onRemoveFromCart,}) => {
+
+    const { CartItems, setCartItems, TotalPrice } = useCart()
+    const [isOrderComplete, setisOrderComplete] = useState(false);
+    const [OrderId, setOrderId] = useState(null);
+    const [isLoadingOrder, setIsLoadingOrder] = useState(false);
+
+    const TotalRoundedTax = (Math.round(TotalPrice / 100) * 5).toFixed(0);
+    const TotalTax = (TotalPrice / 100) * 5;
+    const TotalPriceWithTax = (TotalPrice - TotalTax).toFixed(0);
+
+
+
+    const delay = (ms) => new Promise((resolve, reject) => setTimeout(resolve, ms))
+
+
+
+    const onClickOrder = async () => {
+        try {
+            setIsLoadingOrder(true);
+            const { data } = await axios.post('http://localhost:3001/orders', {
+                items: CartItems
+            });
+            setOrderId(data.id);
+            setisOrderComplete(true);
+            setCartItems([]);
+
+           for (let i = 0; i < CartItems.length; i++) {
+            const item = CartItems[i];
+            await axios.delete('http://localhost:3001/cart/' + item.id)
+            await delay(1000);
+           }
+        } catch (error) {
+            console.log(error);
+            alert('Не удалось создать заказ :(')
+        }
+        setIsLoadingOrder(false);
+    }
     
 
     return ( 
@@ -20,10 +61,10 @@ const Drawer = ({onCloseDrawer, CartItems = [], onRemoveFromCart}) => {
                             </div>
                     </div>
 
-                    {CartItems.length > 0 ? <div className='cartItemsFlex'>
+                    {itemsCart.length > 0 ? (<div className='cartItemsFlex'>
                         <div className="Drawer__cards">
-                        {CartItems.map((item) => (
-                            <div className="Drawer__card">
+                        {itemsCart.map((item) => (
+                            <div key={item.id} className="Drawer__card">
                                 <div className="Drawer__img">
                                     <img src={item.image} alt="imageCard" />
                                 </div>
@@ -42,25 +83,22 @@ const Drawer = ({onCloseDrawer, CartItems = [], onRemoveFromCart}) => {
                     </div><div className="Drawer__total">
                         <div className="Drawer__amount">
                             <span>Итого:</span>
-                            <p>21 498 руб. </p>
+                            <p>{TotalPriceWithTax} руб. </p>
                         </div>
                         <div className="Drawer__tax">
                             <span>Налог 5%</span>
-                            <p>1074 руб.</p>
+                            <p>{TotalRoundedTax} руб.</p>
                         </div>
                         <div className="Drawer__button">
-                            <button>Оформить заказ</button>
+                            <button disabled={isLoadingOrder} onClick={onClickOrder}>Оформить заказ</button>
                             <img src={ArrowSVG} alt="arrow" />
                         </div>
                     </div>
-                    </div> : <div className="emptyCart">
-                        <img className='emptyCart__box' src={emptyBoxCart} alt="emptyBoxCart" />
-                        <h2>Корзина пустая</h2>
-                        <p>Добавьте хотя бы одну пару кросовок чтобы сделать заказ</p>
-                        <button onClick={onCloseDrawer}>
-                            <img src={arrowBoxCart} alt="arrowBoxCart" />
-                            Вернуться назад</button>
-                    </div>}
+                    </div> ) :
+                        <Info 
+                        name={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"}
+                        desc={isOrderComplete ? `Ваш заказ #${OrderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кросовок чтобы сделать заказ"} 
+                        image={isOrderComplete ? OrderCompleteBoxCart : emptyBoxCart}/>}
                 </div>
             </div>
      );

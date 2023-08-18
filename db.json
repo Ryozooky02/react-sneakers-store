@@ -74,5 +74,6 @@
     }
   ],
   "cart": [],
-  "favorites": []
+  "favorites": [],
+  "orders": []
 }
