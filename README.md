@@ -12,7 +12,7 @@
 7. Content-Loader-React (Скелет предзагрузки).
 8. React Router 6v (Навигация).
 9. SCSS (Стили).
-10. Deploy: [Netlify](https://zesty-quokka-358756.netlify.app)
+10. Deploy: 
 
 
 
