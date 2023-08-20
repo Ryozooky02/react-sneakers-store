@@ -28,10 +28,10 @@ function App() {
       const findItem = CartItems.find((item) => Number(item.parentId) === Number(obj.id));
       if (findItem) {
         setCartItems(prev => prev.filter(card => Number(card.parentId) !== Number(obj.id)));
-        await axios.delete(`http://localhost:3001/cart/${findItem.id}`);
+        await axios.delete(`https://re-reactive-store.onrender.com/cart/${findItem.id}`);
       } else {
         setCartItems(prev => [...prev, obj]);
-        const { data } = await axios.post('http://localhost:3001/cart', obj);
+        const { data } = await axios.post('https://re-reactive-store.onrender.com/cart', obj);
         setCartItems((prev) => prev.map(item => {
           if (item.parentId === data.parentId) {
             return {
@@ -50,7 +50,7 @@ function App() {
   }
 
   const onRemoveFromCart = (id) => {
-    axios.delete(`http://localhost:3001/cart/${id}`);
+    axios.delete(`https://re-reactive-store.onrender.com/${id}`);
     setCartItems(prev => prev.filter(item => item.id !== id));
   }
 
@@ -68,9 +68,9 @@ function App() {
     try {
       async function fetchData() {
         const [itemsResponse, cartResponse, favoritesResponse] = await Promise.all([
-          axios.get('http://localhost:3001/items'), 
-          axios.get('http://localhost:3001/cart'), 
-          axios.get('http://localhost:3001/favorites')
+          axios.get('https://re-reactive-store.onrender.com/items'), 
+          axios.get('https://re-reactive-store.onrender.com/cart'), 
+          axios.get('https://re-reactive-store.onrender.com/favorites')
         ])
   
   
@@ -93,10 +93,10 @@ function App() {
   const onAddtoFavorite = async (obj) => {
     try {
       if (FavoriteItems.find(favObj => favObj.id === obj.id)) {
-        axios.delete(`http://localhost:3001/favorites/${obj.id}`);
+        axios.delete(`https://re-reactive-store.onrender.com/favorites/${obj.id}`);
         setFavoriteItems(prev => prev.filter(card => Number(card.id) !== Number(obj.id)));
       } else {
-        const { data } = await axios.post('http://localhost:3001/favorites', obj);
+        const { data } = await axios.post('https://re-reactive-store.onrender.com/favorites', obj);
         setFavoriteItems((prev) => [...prev, data])
       }
     }

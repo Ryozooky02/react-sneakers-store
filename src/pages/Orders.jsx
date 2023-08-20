@@ -12,7 +12,7 @@ function Orders() {
     useEffect( () =>  {
         ( async () => {
             try {
-                const { data } = await axios.get('http://localhost:3001/orders');
+                const { data } = await axios.get('https://re-reactive-store.onrender.com/orders');
                 setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
                 setIsLoading(false);
             } catch (error) {

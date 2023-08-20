@@ -28,7 +28,7 @@ const Drawer = ({onCloseDrawer, itemsCart = [], onRemoveFromCart, opened}) => {
     const onClickOrder = async () => {
         try {
             setIsLoadingOrder(true);
-            const { data } = await axios.post('http://localhost:3001/orders', {
+            const { data } = await axios.post('https://re-reactive-store.onrender.com/orders', {
                 items: CartItems
             });
             setOrderId(data.id);
@@ -37,7 +37,7 @@ const Drawer = ({onCloseDrawer, itemsCart = [], onRemoveFromCart, opened}) => {
 
            for (let i = 0; i < CartItems.length; i++) {
             const item = CartItems[i];
-            await axios.delete('http://localhost:3001/cart/' + item.id)
+            await axios.delete('https://re-reactive-store.onrender.com/cart/' + item.id)
             await delay(1000);
            }
         } catch (error) {
