@@ -18,15 +18,16 @@ const Card = ({
 
     const { isAddedItem } = useContext(AppContext);
     const [isFavorite, setIsFavorite] = useState(favorited);
+    const itemObj = {image, name, price, id, parentId: id}
 
     
     const onClickFavorite = () => {
-        onAddtoFavorite({image, name, price, id});
+        onAddtoFavorite(itemObj);
         setIsFavorite(!isFavorite);
     }
     
     const onClickPlus = () => {
-        onAddtoCart({id, image, name, price});
+        onAddtoCart(itemObj);
     }
 
     return ( 
@@ -50,9 +51,9 @@ const Card = ({
                             <div className="Card">
                                 <div className="Card__img">
                                     <img src={image} alt="Card" />
-                                    <div className={ isFavorite ? 'Card__favorite-Active' : 'Card__favorite-nonActive'}>
+                                    {onAddtoFavorite && <div className={ isFavorite ? 'Card__favorite-Active' : 'Card__favorite-nonActive'}>
                                         <svg onClick={onClickFavorite} width={20}  height={20} clipRule="evenodd" fillRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 5.72c-2.624-4.517-10-3.198-10 2.461 0 3.725 4.345 7.727 9.303 12.54.194.189.446.283.697.283s.503-.094.697-.283c4.977-4.831 9.303-8.814 9.303-12.54 0-5.678-7.396-6.944-10-2.461z" fillRule="nonzero"/></svg>
-                                        </div>
+                                        </div>}
                                 </div>
                                 <div className="Card__title">
                                     <h3>{name}</h3>
@@ -64,7 +65,7 @@ const Card = ({
                                     </div>
                 
                                     <div className="Card__price-svg">
-                                        <button onClick={onClickPlus}>{ isAddedItem(id) ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        {onAddtoCart && <button onClick={onClickPlus}>{ isAddedItem(id) ? <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <rect width="32" height="32" rx="8" fill="url(#paint0_linear_60_200)"/>
                                         <g clipPath="url(#clip0_60_200)">
                                         <g filter="url(#filter0_d_60_200)">
@@ -92,7 +93,7 @@ const Card = ({
                                         <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="white" stroke="#F2F2F2"/>
                                         <path d="M20.6653 15.1312H17.2021V11.6682C17.2021 10.3328 15.1311 10.3328 15.1311 11.6682V15.1312H11.668C10.3329 15.1312 10.3329 17.2022 11.668 17.2022H15.1311V20.6652C15.1311 22.0005 17.2021 22.0005 17.2021 20.6652V17.2022H20.6653C22.0005 17.2022 22.0005 15.1312 20.6653 15.1312Z" fill="#D3D3D3"/>
                                         </svg> }
-                                        </button>
+                                        </button>}
                                     </div>
                                 </div>
                             </div>

@@ -6,8 +6,6 @@ function Favorites({ onAddtoFavorite, onAddtoCart}) {
 
     const { FavoriteItems } = useContext(AppContext);
     
-
-    console.log(FavoriteItems);
     return (
         <div className="content-cards">
         <div className="Cards__header">

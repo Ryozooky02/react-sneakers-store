@@ -8,6 +8,11 @@
     z-index: 2000;
     overflow: hidden;
 }
+.Overlay {
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+
 
 
 .Drawer {

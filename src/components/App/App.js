@@ -4,8 +4,10 @@ import Drawer from '../Drawer/Drawer';
 import { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import { Route, Routes } from 'react-router-dom';
+
 import Home from '../../pages/Home';
 import Favorites from '../../pages/Favorites';
+import Orders from '../../pages/Orders';
 
 
 export const AppContext = createContext({});
@@ -20,15 +22,25 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
 
-  const onAddtoCart = (obj) => {
+  const onAddtoCart = async (obj) => {
 
     try {
-      if (CartItems.find((item) => Number(item.id) === Number(obj.id))) {
-        axios.delete(`http://localhost:3001/cart/${obj.id}`);
-        setCartItems(prev => prev.filter(card => Number(card.id) !== Number(obj.id)));
+      const findItem = CartItems.find((item) => Number(item.parentId) === Number(obj.id));
+      if (findItem) {
+        setCartItems(prev => prev.filter(card => Number(card.parentId) !== Number(obj.id)));
+        await axios.delete(`http://localhost:3001/cart/${findItem.id}`);
       } else {
-        axios.post('http://localhost:3001/cart', obj);
-        setCartItems([...CartItems, obj]);
+        setCartItems(prev => [...prev, obj]);
+        const { data } = await axios.post('http://localhost:3001/cart', obj);
+        setCartItems((prev) => prev.map(item => {
+          if (item.parentId === data.parentId) {
+            return {
+              ...item,
+              id: data.id
+            }
+          }
+          return item;
+        }));
       }
      
     } catch (error) {
@@ -47,24 +59,33 @@ function App() {
   }
 
   const isAddedItem = (id) => {
-    return CartItems.some((obj) => Number(obj.id ) === Number(id))
+    return CartItems.some((obj) => Number(obj.parentId) === Number(id))
   }
 
 
 
   useEffect(() => {
-    async function fetchData() {
-      const itemsResponse = await axios.get('http://localhost:3001/items');
-      const cartResponse = await axios.get('http://localhost:3001/cart');
-      const favoritesResponse = await axios.get('http://localhost:3001/favorites');
-
-      setIsLoading(false);
-
-      setCartItems(cartResponse.data);
-      setFavoriteItems(favoritesResponse.data);
-      setItems(itemsResponse.data);
+    try {
+      async function fetchData() {
+        const [itemsResponse, cartResponse, favoritesResponse] = await Promise.all([
+          axios.get('http://localhost:3001/items'), 
+          axios.get('http://localhost:3001/cart'), 
+          axios.get('http://localhost:3001/favorites')
+        ])
+  
+  
+        setIsLoading(false);
+  
+        setCartItems(cartResponse.data);
+        setFavoriteItems(favoritesResponse.data);
+        setItems(itemsResponse.data);
+      }
+        fetchData();
+    } catch (error) {
+        alert('Упс, что-то пошло не так...')
+        console.error(error);
     }
-    fetchData();
+  
   }, [])
 
   
@@ -81,6 +102,7 @@ function App() {
     }
     catch (error) {
       alert('Не удалось добавить в закладки...');
+      console.error(error);
     }
   }
 
@@ -92,7 +114,8 @@ function App() {
     FavoriteItems, 
     isAddedItem, 
     setCartOpened, 
-    setCartItems
+    setCartItems,
+
     
     }}>
       <div className="App">
@@ -122,6 +145,12 @@ function App() {
           </Route>
           <Route path='/favorites' element={
             <Favorites 
+            onAddtoFavorite={onAddtoFavorite}
+            onAddtoCart={onAddtoCart}/>
+          }>
+          </Route>
+          <Route path='/orders' element={
+            <Orders
             onAddtoFavorite={onAddtoFavorite}
             onAddtoCart={onAddtoCart}/>
           }>

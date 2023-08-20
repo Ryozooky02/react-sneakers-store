@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useCart } from '../../hooks/useCart';
 
 
-const Drawer = ({onCloseDrawer, itemsCart = [], onRemoveFromCart,}) => {
+const Drawer = ({onCloseDrawer, itemsCart = [], onRemoveFromCart, opened}) => {
 
     const { CartItems, setCartItems, TotalPrice } = useCart()
     const [isOrderComplete, setisOrderComplete] = useState(false);
